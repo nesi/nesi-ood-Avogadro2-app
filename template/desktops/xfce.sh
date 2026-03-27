@@ -75,6 +75,8 @@ export LIBGL_ALWAYS_SOFTWARE=1
 module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
 module load Avogadro2/1.103.0-foss-2022a
 
+ldconfig -p | grep GLEW
+
 # Launch Avogadro2
 #avogadro2.app
 avogadro2 --platform vnc
