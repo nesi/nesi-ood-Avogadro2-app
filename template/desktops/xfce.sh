@@ -77,4 +77,4 @@ module load Avogadro2/1.103.0-foss-2022a
 
 # Launch Avogadro2
 #avogadro2.app
-avogadro2 --platform eglfs
+avogadro2 --platform minimalegl
