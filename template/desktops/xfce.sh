@@ -81,25 +81,22 @@
 # #avogadro2.app
 # avogadro2 --platform vnc
 
-#!/bin/bash
-set -e
 
-# Load modules
 module reset
 module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
 module load Avogadro2/1.103.0-foss-2022a
 
-# Avogadro built against system GLEW – ensure visibility
 export LD_LIBRARY_PATH=/lib64:/usr/lib64:$LD_LIBRARY_PATH
 
-# Fix DBUS machine-id (required because we are NOT using XFCE)
+# Fix D-Bus without XFCE
 mkdir -p $HOME/.dbus
 dbus-uuidgen > $HOME/.dbus/machine-id
 export DBUS_MACHINE_ID_FILE=$HOME/.dbus/machine-id
 
-# OOD will set $PORT to the VNC port (usually 5901)
-echo "Starting Avogadro2 VNC server on port ${PORT}"
+# OOD exposes the correct port here
+PORT=${OOD_PORT:-5901}
 
-# Run Avogadro2 with Qt's built-in VNC backend on the correct port
+echo "Launching Avogadro2 VNC server on port ${PORT}"
+
 exec avogadro2 --platform vnc:port=${PORT}
 
