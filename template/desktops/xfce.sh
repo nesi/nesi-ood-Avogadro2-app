@@ -79,4 +79,4 @@ ldconfig -p | grep GLEW
 
 # Launch Avogadro2
 #avogadro2.app
-avogadro2 --platform vnc
+avogadro2 --platform vnc:port=5901
