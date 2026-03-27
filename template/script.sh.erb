@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Clean the environment
+module purge && module restore
+
+# Ensure that the user's configured login shell is used
+export SHELL="$(getent passwd $USER | cut -d: -f7)"
+
+# Set working directory to home directory
+cd "${HOME}"
+
+#
+# Launch Xfce Window Manager and Panel
+#
+
+## Fix terminal colors for ls command with a wrapper script for system ls
+mkdir -p ~/ondemand/ood_bin
+cat > ~/ondemand/ood_bin/ls <<'EOF'
+#!/bin/bash
+/usr/bin/ls --color=auto "$@"
+EOF
+
+chmod +x ~/ondemand/ood_bin/ls
+export PATH="$HOME/ondemand/ood_bin:$PATH"
+
+# Grab the user's selection from the OOD form
+export avogadro2_module="<%= context.avogadro2_module %>"
+export amber_module="<%= context.amber_module %>"
+export xtb_module="<%= context.xtb_module %>"
+
+module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
+export avogadro2_module="Avogadro2/1.103.0-foss-2022a"
+
+source "<%= session.staged_root.join("desktops", "xfce.sh") %>"
+

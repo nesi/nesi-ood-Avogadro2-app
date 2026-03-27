@@ -1,0 +1,105 @@
+<%-
+  groups = OodSupport::User.new.groups.sort_by(&:id).tap { |groups|
+    groups.unshift(groups.delete(OodSupport::Process.group))
+  }.map(&:name).grep(/.*[0-9]{5}/)
+
+  all_groups = OodSupport::User.new.groups.sort_by(&:id).tap { |groups|
+    groups.unshift(groups.delete(OodSupport::Process.group))
+  }.map(&:name)
+  has_slurm_apps = all_groups.include?("nesi-staff") || all_groups.include?("ondemand-slurm-apps")
+-%>
+---
+title: "Avogadro2"
+
+description: |
+  This app will launch Avogadro2
+attributes:
+  # select the cluster
+  cluster:
+    widget: "select"
+    options:
+      - [
+          "Kubernetes", "my-k8s-cluster",
+          data-hide-gpu: true,
+          data-set-gpu: 'none',
+        ]
+<% if has_slurm_apps %>
+      - ["Slurm HPC", "nesi_tdc_hpc"]
+    help: |
+      Kubernetes jobs are more likely to start promptly - "Slurm HPC" jobs may have to wait in the queue.
+      If you need Apptainer or GPUs then you must choose "Slurm HPC" currently.
+<% end %>
+    cacheable: false  # we always want k8s at the top?
+
+  bc_vnc_resolution:
+    required: true
+  avogadro2_module:
+    widget: select
+    label: "Avogadro2 module"
+    options:
+      - [ "Avogadro2 1.97.0", "Avogadro2/1.97.0-linux-x86_64" ]
+    cacheable: false  # default to latest (first in list)
+  amber_module:
+    widget: select
+    label: "Amber module (needed for system prep & parameterization if using Amber)"
+    options:
+      - [ "Amber 24.0", "Amber/24.0-foss-2023a-AmberTools-25.0-CUDA-12.5.0" ]
+    cacheable: false  # default to latest (first in list)
+  xtb_module:
+    widget: select
+    label: "xtb module (needed for quick geometric optimisations in Avogadro)"
+    options:
+      - [ "xtb 6.7.1", "xtb/6.7.1-foss-2023a" ]
+      - [ "xtb 6.6.1", "xtb/6.6.1-foss-2023a" ]
+    cacheable: false  # default to latest (first in list)
+  account:
+    label: "Project Code"
+    widget: select
+    options:
+      <%- groups.each do |group| %>
+      - "<%= group %>"
+      <%- end %>
+    required: true
+    display: true
+  bc_num_hours:
+    max: 24
+    min: 1
+    step: 1
+    value: 1
+    widget: number_field
+  num_cores:
+    label: Number of cores
+    max: 4
+    min: 1
+    value: 2
+    widget: number_field
+    display: true
+  num_mem:
+    label: Memory per job (GB)
+    max: 32
+    min: 2
+    step: 1
+    value: 2
+    widget: number_field
+    display: true
+  gpu:
+    label: GPU
+    widget: select
+    options:
+      - 'none'
+      - [ "L4 (24 GB VRAM, aimed at AI workloads, up to single precision)", 'L4' ]
+      - [ "H100 (96 GB VRAM, recommend submitting as Slurm jobs due to potential wait times)", "H100" ]
+    help: |
+      **WARNING**: selecting a GPU can significantly increase the time it takes for your session to start!
+    display: true
+form:
+  - cluster
+  - avogadro2_module
+  - amber_module
+  - xtb_module
+  - account
+  - bc_vnc_resolution
+  - bc_num_hours
+  - num_cores
+  - num_mem
+  - gpu
