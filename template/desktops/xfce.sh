@@ -1,102 +1,80 @@
-# # adapted from: https://github.com/OSC/ondemand/blob/master/apps/bc_desktop/template/desktops/xfce.sh
+# adapted from: https://github.com/OSC/ondemand/blob/master/apps/bc_desktop/template/desktops/xfce.sh
 
-# # Remove any preconfigured monitors
-# if [[ -f "${HOME}/.config/monitors.xml" ]]; then
-#   mv "${HOME}/.config/monitors.xml" "${HOME}/.config/monitors.xml.bak"
-# fi
+# Remove any preconfigured monitors
+if [[ -f "${HOME}/.config/monitors.xml" ]]; then
+  mv "${HOME}/.config/monitors.xml" "${HOME}/.config/monitors.xml.bak"
+fi
 
-# # Copy over default panel if doesn't exist, otherwise it will prompt the user
-# PANEL_CONFIG="${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
-# if [[ ! -e "${PANEL_CONFIG}" ]]; then
-#   mkdir -p "$(dirname "${PANEL_CONFIG}")"
-#   cp "/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
-# fi
+# Copy over default panel if doesn't exist, otherwise it will prompt the user
+PANEL_CONFIG="${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+if [[ ! -e "${PANEL_CONFIG}" ]]; then
+  mkdir -p "$(dirname "${PANEL_CONFIG}")"
+  cp "/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
+fi
 
-# # Disable startup services
-# xfconf-query -c xfce4-session -p /startup/ssh-agent/enabled -n -t bool -s false
-# xfconf-query -c xfce4-session -p /startup/gpg-agent/enabled -n -t bool -s false
+# Disable startup services
+xfconf-query -c xfce4-session -p /startup/ssh-agent/enabled -n -t bool -s false
+xfconf-query -c xfce4-session -p /startup/gpg-agent/enabled -n -t bool -s false
 
-# # No screensaver or power mgmt
-# xfconf-query -c xfce4-screensaver -p /saver/enabled -n -t bool -s false
-# xfconf-query -c xfce4-screensaver -p /lock/enabled -n -t bool -s false
+# No screensaver or power mgmt
+xfconf-query -c xfce4-screensaver -p /saver/enabled -n -t bool -s false
+xfconf-query -c xfce4-screensaver -p /lock/enabled -n -t bool -s false
 
-# # Disable useless services on autostart
-# AUTOSTART="${HOME}/.config/autostart"
-# rm -fr "${AUTOSTART}"    # clean up previous autostarts
-# mkdir -p "${AUTOSTART}"
-# for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "tracker-miner-apps" "tracker-miner-user-guides" "xfce4-power-manager" "xfce-polkit"; do
-#   echo -e "[Desktop Entry]\nHidden=true" > "${AUTOSTART}/${service}.desktop"
-# done
+# Disable useless services on autostart
+AUTOSTART="${HOME}/.config/autostart"
+rm -fr "${AUTOSTART}"    # clean up previous autostarts
+mkdir -p "${AUTOSTART}"
+for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "tracker-miner-apps" "tracker-miner-user-guides" "xfce4-power-manager" "xfce-polkit"; do
+  echo -e "[Desktop Entry]\nHidden=true" > "${AUTOSTART}/${service}.desktop"
+done
 
-# # Run Xfce4 Terminal as login shell (sets proper TERM)
-# TERM_CONFIG="${HOME}/.config/xfce4/terminal/terminalrc"
-# if [[ ! -e "${TERM_CONFIG}" ]]; then
-#   mkdir -p "$(dirname "${TERM_CONFIG}")"
-#   sed 's/^ \{4\}//' > "${TERM_CONFIG}" << EOL
-#     [Configuration]
-#     CommandLoginShell=TRUE
-# EOL
-# else
-#   sed -i \
-#     '/^CommandLoginShell=/{h;s/=.*/=TRUE/};${x;/^$/{s//CommandLoginShell=TRUE/;H};x}' \
-#     "${TERM_CONFIG}"
-# fi
+# Run Xfce4 Terminal as login shell (sets proper TERM)
+TERM_CONFIG="${HOME}/.config/xfce4/terminal/terminalrc"
+if [[ ! -e "${TERM_CONFIG}" ]]; then
+  mkdir -p "$(dirname "${TERM_CONFIG}")"
+  sed 's/^ \{4\}//' > "${TERM_CONFIG}" << EOL
+    [Configuration]
+    CommandLoginShell=TRUE
+EOL
+else
+  sed -i \
+    '/^CommandLoginShell=/{h;s/=.*/=TRUE/};${x;/^$/{s//CommandLoginShell=TRUE/;H};x}' \
+    "${TERM_CONFIG}"
+fi
 
-# # launch dbus first through eval becuase it can conflict with a conda environment
-# # see https://github.com/OSC/ondemand/issues/700
-# eval $(dbus-launch --sh-syntax)
+# launch dbus first through eval becuase it can conflict with a conda environment
+# see https://github.com/OSC/ondemand/issues/700
+eval $(dbus-launch --sh-syntax)
 
-# # Force kill any existing compositors that might be running
-# killall compton picom xcompmgr compiz 2>/dev/null || true
+# Force kill any existing compositors that might be running
+killall compton picom xcompmgr compiz 2>/dev/null || true
 
-# # Ensure xfwm4 will manage compositing by setting the property explicitly
-# xfconf-query -c xfwm4 -p /general/use_compositing -t bool -s true
+# Ensure xfwm4 will manage compositing by setting the property explicitly
+xfconf-query -c xfwm4 -p /general/use_compositing -t bool -s true
 
-# # Remove the Minimize (Hide) and Maximize buttons from the window title bar
-# # 'O' = Options menu, '|' = Title text, 'C' = Close button
-# xfconf-query -c xfwm4 -p /general/button_layout -s "|" 2>/dev/null
+# Remove the Minimize (Hide) and Maximize buttons from the window title bar
+# 'O' = Options menu, '|' = Title text, 'C' = Close button
+xfconf-query -c xfwm4 -p /general/button_layout -s "|" 2>/dev/null
 
-# # START THE WINDOW MANAGER COMPONENTS IN THE BACKGROUND
-# #xfwm4 --compositor=off --sm-client-disable &
-# #xsetroot -solid "#D3D3D3" &
-# #xfsettingsd --sm-client-disable &
-# #xfce4-panel --sm-client-disable &
+# START THE WINDOW MANAGER COMPONENTS IN THE BACKGROUND
+xfwm4 --compositor=off --sm-client-disable &
+xsetroot -solid "#D3D3D3" &
+xfsettingsd --sm-client-disable &
+#xfce4-panel --sm-client-disable &
 
-# # Start up xfce desktop (block until user logs out of desktop)
-# #xfce4-session
+# Start up xfce desktop (block until user logs out of desktop)
+#xfce4-session
 
-# unset LIBGL_ALWAYS_INDIRECT
-# export LIBGL_ALWAYS_SOFTWARE=1
+unset LIBGL_ALWAYS_INDIRECT
+export LIBGL_ALWAYS_SOFTWARE=1
 
-# #module load ${xtb_module}
-# #module load ${amber_module}
-# #module load ${avogadro2_module}
+#module load ${xtb_module}
+#module load ${amber_module}
+#module load ${avogadro2_module}
 
-# module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
-# module load Avogadro2/1.103.0-foss-2022a
-
-# ldconfig -p | grep GLEW
-
-# # Launch Avogadro2
-# #avogadro2.app
-# avogadro2 --platform vnc
-
-
-module reset
 module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
 module load Avogadro2/1.103.0-foss-2022a
 
-export LD_LIBRARY_PATH=/lib64:/usr/lib64:$LD_LIBRARY_PATH
-
-# Fix D-Bus without XFCE
-mkdir -p $HOME/.dbus
-dbus-uuidgen > $HOME/.dbus/machine-id
-export DBUS_MACHINE_ID_FILE=$HOME/.dbus/machine-id
-
-# OOD exposes the correct port here
-PORT=${OOD_PORT:-5901}
-
-echo "Launching Avogadro2 VNC server on port ${PORT}"
-
-exec avogadro2 --platform vnc:port=${PORT}
-
+# Launch Avogadro2
+#avogadro2.app
+avogadro2
