@@ -72,5 +72,9 @@ module load ${xtb_module}
 module load ${amber_module}
 module load ${avogadro2_module}
 
+module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
+module load Avogadro2/1.103.0-foss-2022a
+
 # Launch Avogadro2
-avogadro2.app
+#avogadro2.app
+avogadro2
