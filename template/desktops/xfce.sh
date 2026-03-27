@@ -77,4 +77,5 @@ module load Avogadro2/1.103.0-foss-2022a
 
 # Launch Avogadro2
 #avogadro2.app
+export QT_DEBUG_PLUGINS=1
 avogadro2
