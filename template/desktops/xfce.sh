@@ -73,37 +73,10 @@ export LIBGL_ALWAYS_SOFTWARE=1
 #module load ${avogadro2_module}
 
 module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
-module load Avogadro2/1.103.0-foss-2022a
+#module load Avogadro2/1.103.0-foss-2022a
+module load Avogadro2/1.103.0-linux-x86_64
 
 # Launch Avogadro2
-#avogadro2.app
+avogadro2.app
 
-
-# -----------------------------------------------------------------------------
-# 1. FIX D-BUS & XFCE (Generate a fake machine-id for this specific job)
-# -----------------------------------------------------------------------------
-export DBUS_MACHINE_UUID_FILE=/tmp/machine-id-${USER}-${SLURM_JOB_ID}
-dbus-uuidgen > $DBUS_MACHINE_UUID_FILE
-
-# -----------------------------------------------------------------------------
-# 2. FIX QT6 SVG SCALING (Force 1x scaling so SVG icons don't infinitely expand)
-# -----------------------------------------------------------------------------
-export QT_AUTO_SCREEN_SCALE_FACTOR=0
-export QT_SCALE_FACTOR=1
-export XDG_CURRENT_DESKTOP=XFCE
-export QT_QPA_PLATFORMTHEME=gtk3
-
-# -----------------------------------------------------------------------------
-# 3. FIX OPEN BABEL (Point it to your installed format plugins)
-# Note: Ensure $EBROOTOPENBABEL is loaded by your module before this runs!
-# -----------------------------------------------------------------------------
-if [ -n "$EBROOTOPENBABEL" ]; then
-    export BABEL_LIBDIR=$EBROOTOPENBABEL/lib/openbabel/3.1.0
-    export BABEL_DATADIR=$EBROOTOPENBABEL/share/openbabel/3.1.0
-fi
-
-# -----------------------------------------------------------------------------
-# LAUNCH AVOGADRO
-# -----------------------------------------------------------------------------
-avogadro2
 
