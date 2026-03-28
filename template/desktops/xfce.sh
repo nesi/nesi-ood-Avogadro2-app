@@ -68,9 +68,9 @@ xfsettingsd --sm-client-disable &
 unset LIBGL_ALWAYS_INDIRECT
 export LIBGL_ALWAYS_SOFTWARE=1
 
-#module load ${xtb_module}
-#module load ${amber_module}
-#module load ${avogadro2_module}
+module load ${xtb_module}
+module load ${amber_module}
+module load ${avogadro2_module}
 
 #module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
 #module load Avogadro2/1.103.0-foss-2022a
