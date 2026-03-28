@@ -20,4 +20,4 @@ export GALLIUM_DRIVER=llvmpipe
 export QT_OPENGL=software
 export QT_XCB_FORCE_SOFTWARE_OPENGL=1
 
-avogadro2
+avogadro2 --platform vnc
