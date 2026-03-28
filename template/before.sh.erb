@@ -17,7 +17,7 @@ source /bin/find_host_port
 export HOST_CFG=$(dig +short -x $HOST_CFG)
 
 export host="$HOST_CFG"
-export websocket="$PORT_CFG"
+export websocket= 8080#"$PORT_CFG"
 
 # create the secret with the password set
 cat <<EOF | kubectl apply -f -
