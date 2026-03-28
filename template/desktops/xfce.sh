@@ -77,6 +77,6 @@ module load ${avogadro2_module}
 #module load Avogadro2/1.103.0-linux-x86_64
 
 # Launch Avogadro2
-avogadro2.app --platform vnc
+avogadro2.app
 
 
