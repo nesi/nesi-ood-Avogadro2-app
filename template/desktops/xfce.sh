@@ -72,11 +72,11 @@ export LIBGL_ALWAYS_SOFTWARE=1
 #module load ${amber_module}
 #module load ${avogadro2_module}
 
-module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
+#module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
 #module load Avogadro2/1.103.0-foss-2022a
-module load Avogadro2/1.103.0-linux-x86_64
+#module load Avogadro2/1.103.0-linux-x86_64
 
 # Launch Avogadro2
-avogadro2.app
+avogadro2.app --platform vnc
 
 
