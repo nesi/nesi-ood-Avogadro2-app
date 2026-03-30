@@ -73,7 +73,7 @@ module load ${amber_module}
 module load ${avogadro2_module}
 
 module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
-module use wmctrl/1.07-GCCcore-12.3.0
+module load wmctrl/1.07-GCCcore-12.3.0
 
 # Launch Avogadro2
 avogadro2.app &
