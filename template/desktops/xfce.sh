@@ -76,9 +76,9 @@ module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/module
 module load wmctrl/1.07-GCCcore-12.3.0
 
 # Launch Avogadro2
-avogadro2.app 
+avogadro2.app &
 
-#wmctrl -r Avogadro2 -b add,maximized_vert,maximized_horz
+wmctrl -r Avogadro2 -b add,maximized_vert,maximized_horz
 
 # -----------------------------------------------------------------------------
 # 4. FIX 3D RENDERING (Force CPU-based OpenGL software rendering)
