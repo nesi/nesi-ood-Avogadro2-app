@@ -70,22 +70,22 @@ export LIBGL_ALWAYS_SOFTWARE=1
 
 module load ${xtb_module}
 module load ${amber_module}
-#module load ${avogadro2_module}
+module load ${avogadro2_module}
 
 module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
-#module load glibc/2.35-GCCcore-11.3.0
-#module load Avogadro2/1.103.0-linux-x86_64
-module load Avogadro2/1.103.0-foss-2022a
+module use wmctrl/1.07-GCCcore-12.3.0
 
 # Launch Avogadro2
-#avogadro2.app
+avogadro2.app &
+
+wmctrl -r Avogadro2 -b add,maximized_vert,maximized_horz
 
 # -----------------------------------------------------------------------------
 # 4. FIX 3D RENDERING (Force CPU-based OpenGL software rendering)
 # -----------------------------------------------------------------------------
-export LIBGL_ALWAYS_SOFTWARE=1
-export GALLIUM_DRIVER=llvmpipe
-export QT_OPENGL=software
-export QT_XCB_FORCE_SOFTWARE_OPENGL=1
+#export LIBGL_ALWAYS_SOFTWARE=1
+#export GALLIUM_DRIVER=llvmpipe
+#export QT_OPENGL=software
+#export QT_XCB_FORCE_SOFTWARE_OPENGL=1
 
-vglrun avogadro2
+#vglrun avogadro2
