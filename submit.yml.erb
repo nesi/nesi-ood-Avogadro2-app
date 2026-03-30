@@ -65,7 +65,7 @@ script:
         <% if additional_projects.present? %>
         ADDITIONAL_PROJECTS: "<%= Array(additional_projects).join(':') %>"
         <% end %>
-      port: "5900"
+      port: "5901"
       cpu: "<%= num_cores %>"
       memory: "<%= num_mem %>Gi"
     mounts:
