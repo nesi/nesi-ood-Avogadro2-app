@@ -57,9 +57,9 @@ xfconf-query -c xfwm4 -p /general/use_compositing -t bool -s true
 xfconf-query -c xfwm4 -p /general/button_layout -s "|" 2>/dev/null
 
 # START THE WINDOW MANAGER COMPONENTS IN THE BACKGROUND
-xfwm4 --compositor=off --sm-client-disable &
-xsetroot -solid "#D3D3D3" &
-xfsettingsd --sm-client-disable &
+#xfwm4 --compositor=off --sm-client-disable &
+#xsetroot -solid "#D3D3D3" &
+#xfsettingsd --sm-client-disable &
 #xfce4-panel --sm-client-disable &
 
 # Start up xfce desktop (block until user logs out of desktop)
