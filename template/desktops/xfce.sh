@@ -58,32 +58,14 @@ xfconf-query -c xfwm4 -p /general/button_layout -s "|" 2>/dev/null
 
 # START THE WINDOW MANAGER COMPONENTS IN THE BACKGROUND
 xfwm4 --compositor=off --sm-client-disable &
-#xsetroot -solid "#D3D3D3" &
-#xfsettingsd --sm-client-disable &
+xsetroot -solid "#D3D3D3" &
+xfsettingsd --sm-client-disable &
 #xfce4-panel --sm-client-disable &
 
-# Start up xfce desktop (block until user logs out of desktop)
-#xfce4-session
-
-unset LIBGL_ALWAYS_INDIRECT
-export LIBGL_ALWAYS_SOFTWARE=1
-
+# Load packages
 module load ${xtb_module}
 module load ${amber_module}
 module load ${avogadro2_module}
 
-#module use /nesi/nobackup/nesi99999/geoffreyweal/Installations/Avogradro2/modules/all
-#module load wmctrl/1.07-GCCcore-12.3.0
-
 # Launch Avogadro2
 avogadro2.app
-
-# -----------------------------------------------------------------------------
-# 4. FIX 3D RENDERING (Force CPU-based OpenGL software rendering)
-# -----------------------------------------------------------------------------
-#export LIBGL_ALWAYS_SOFTWARE=1
-#export GALLIUM_DRIVER=llvmpipe
-#export QT_OPENGL=software
-#export QT_XCB_FORCE_SOFTWARE_OPENGL=1
-
-#vglrun avogadro2
