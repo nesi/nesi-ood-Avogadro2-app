@@ -33,6 +33,15 @@ attributes:
 
   bc_vnc_resolution:
     required: true
+  account:
+    label: "Project Code"
+    widget: select
+    options:
+      <%- groups.each do |group| %>
+      - "<%= group %>"
+      <%- end %>
+    required: true
+    display: true
   avogadro2_module:
     widget: select
     label: "Avogadro2 module"
@@ -52,15 +61,6 @@ attributes:
       - [ "xtb 6.7.1", "xtb/6.7.1-foss-2023a" ]
       - [ "xtb 6.6.1", "xtb/6.6.1-foss-2023a" ]
     cacheable: false  # default to latest (first in list)
-  account:
-    label: "Project Code"
-    widget: select
-    options:
-      <%- groups.each do |group| %>
-      - "<%= group %>"
-      <%- end %>
-    required: true
-    display: true
   bc_num_hours:
     max: 24
     min: 1
@@ -94,10 +94,10 @@ attributes:
     display: true
 form:
   - cluster
+  - account
   - avogadro2_module
   - amber_module
   - xtb_module
-  - account
   - bc_vnc_resolution
   - bc_num_hours
   - num_cores
