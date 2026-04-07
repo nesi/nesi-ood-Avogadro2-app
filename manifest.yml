@@ -1,6 +1,6 @@
 ---
 name: Avogadro2
-category: Chemistry/Biochemistry
+category: Chemistry
 role: batch_connect
 description: |
   This will launch an Interactive Avogadro2 session.
