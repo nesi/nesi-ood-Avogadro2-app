@@ -1,7 +1,7 @@
 ---
 name: Avogadro2
 category: Specialized Applications
-sub-category: Chemistry
+subcategory: Chemistry
 role: batch_connect
 description: |
   This will launch an Interactive Avogadro2 session.
