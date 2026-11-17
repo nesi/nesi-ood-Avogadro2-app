@@ -70,30 +70,31 @@ script:
       cpu: "<%= num_cores %>"
       memory: "<%= num_mem %>Gi"
     mounts:
-      - type: host
+      - type: pvc
         name: home
-        path: /home
+        claim_name: weka-home
         destination_path: /home
-      - type: host
+      - type: pvc
         name: wlghome
-        path: /home
+        claim_name: weka-home
         destination_path: /scale_wlg_persistent/filesets/home
-      - type: host
+      - type: pvc
         name: project
-        path: /nesi/project
+        claim_name: weka-project
         destination_path: /nesi/project
-      - type: host
+      - type: pvc
         name: wlgproject
-        path: /nesi/project
+        claim_name: weka-project
         destination_path: /scale_wlg_persistent/filesets/project
-      - type: host
+      - type: pvc
         name: nobackup
-        path: /nesi/nobackup
+        claim_name: weka-nobackup
         destination_path: /nesi/nobackup
-      - type: host
+      - type: pvc
         name: software
-        path: /opt/nesi
+        claim_name: weka-software
         destination_path: /opt/nesi
+        read_only: true
       - type: host
         name: nss-socket
         host_type: Socket
